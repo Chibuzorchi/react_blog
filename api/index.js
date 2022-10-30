@@ -8,10 +8,12 @@ const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const cors = require("cors")
 const multer = require("multer");
+const path = require("path");
 const port = 9800;
 
 app.use(cors())
 app.use(express.json());
+app.use("/asset", express.static(path.join(__dirname, "/images")))
 
 
 dotenv.config();
@@ -33,8 +35,11 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage:storage});
+
 app.post("/api/upload", upload.single("file"), (req, res) => {
-    res.status(200).json({success: true, message: "File Uploaded!"})
+    const filename = req.file.filename
+    const url = `${req.protocol}://${req.hostname}:9800/asset/${filename}`
+    res.status(200).json({success: true, message: "File Uploaded!", url})
 })
 
 //ROUTES

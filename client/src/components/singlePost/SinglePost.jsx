@@ -1,25 +1,29 @@
 import axios from "../../utils/axios";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "./singlePost.css";
 import { useState } from "react";
+import {Link} from "react-router-dom"
 
 export default function SinglePost() {
-  const location = useLocation();
-  const path = location.pathname.split("/")[2];
-  const [post, setPost] = useState({})
+  const {state} = useLocation();
+  const params = useParams();
+ 
+
+  const [post, setPost] = useState(state)
   useEffect(() => {
-    const getPost = async () => {
-      const res = await axios.get("/posts/" + path);
-      setPost(res.data)
-    };
-    getPost();
+    console.log(post)
+    // const getPost = async () => {
+    //   const res = await axios.get("/posts/" + params.postId);
+    //   setPost(res.data)
+    // };
+    // getPost();
   })
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
         {post.photo && (
-           <img className={post.photo} alt="" />
+           <img src={post.photo} alt="" className="postImg"/>
         )}
        
         <h1 className="singlePostTitle">
@@ -31,7 +35,12 @@ export default function SinglePost() {
         </h1>
 
         <div className="singlePostInfo">
-            <span className="singlePostAuthor">Author: <b>{post.username}</b></span>
+            <span className="singlePostAuthor">
+              Author:
+              <Link className="link" to={`/?user=${post.username}`}>
+              <b>{post.username}</b>
+              </Link>
+              </span>
             <span className="singlePostDate">{new Date(post.createdAt).toDateString()}</span>
         </div>
 

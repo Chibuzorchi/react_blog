@@ -11,12 +11,13 @@ import { useLocation } from 'react-router-dom'
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const {search} = useLocation();
+  
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await axios.get("/posts"+search)
-      setPosts(res.data)
-    }
+      const res = await axios.get("/posts" + search);
+      setPosts(res.data);
+    };
 
     fetchPosts();
   }, [search]);
@@ -29,5 +30,5 @@ export default function Home() {
       <Sidebar />
     </div>
     </>
-  )
+  );
 }

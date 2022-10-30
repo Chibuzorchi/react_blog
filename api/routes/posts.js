@@ -1,17 +1,36 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const multer = require("multer")
 
 
 
-//CREATE NEW POST
+
+//IMAGE UPLOAD
+const storage = multer.diskStorage({
+    destination:(req, file, cb) => {
+        cb(null, "images")},
+        filename:(req, file, cb) => {
+            cb(null, req.body.name)
+        }
+})
+
+//CREATE POST
+const upload = multer({storage:storage});
+
 router.post("/", async (req,res) => {
+    console.log(req.body);
     const newPost = new Post(req.body);
     try {
         const savePost = await newPost.save();
-        res.status(200).json({success: true, message: "Post Created"})
+        if(savePost) {
+            res.status(201).json({success: true, message: "Post Created", data: savePost})
+        } else {
+            res.status(500).json({success: false, message: "Failed to create post"})
+        }
     } catch (err) {
-        res.status(500).json(err)
+        console.error(err);
+        res.status(500).json({success: false, message: "Something went wrong"})
     }
    
 });
@@ -83,11 +102,12 @@ router.get("/", async (req, res) => {
     try {
         let posts;
         if(username){
-            posts = await Post.find({username})
+            posts = await Post.find({username:username});
         }else if(catName){
             posts = await Post.find({categories:{
-                $in:[catName]
-            }})
+                $in:[catName],
+            },
+        })
         } else {
             posts = await Post.find();
         }

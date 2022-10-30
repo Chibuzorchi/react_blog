@@ -4,9 +4,9 @@ import {Link} from "react-router-dom"
 export default function Post({post}) {
   return (
     <div className="post">
-      {post.photo && (
+      {post.photo && 
         <img className="postImg" src={post.photo} alt=""/>
-      )}
+      }
       
     
     <div className="postInfo">
@@ -16,10 +16,10 @@ export default function Post({post}) {
            ))}
         </div>
 
-              <Link className="link" to={`/post/${post._id}`}>
+              <Link className="link" to={`/post/${post._id}`} state={post}>
               <span className="PostTitle">{post.title}</span>
               </Link>
-        
+              <hr />
        
         <span className="postDate">{new Date(post.createdAt).toDateString()}</span>
     </div>
