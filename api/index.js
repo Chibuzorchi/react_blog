@@ -38,7 +38,7 @@ const upload = multer({storage:storage});
 
 app.post("/api/upload", upload.single("file"), (req, res) => {
     const filename = req.file.filename
-    const url = `${req.protocol}://${req.hostname}:9800/asset/${filename}`
+    const url = `${req.protocol}://${req.hostname}/asset/${filename}`
     res.status(200).json({success: true, message: "File Uploaded!", url})
 })
 
