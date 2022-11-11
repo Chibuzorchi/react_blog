@@ -1,22 +1,11 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
-const multer = require("multer")
 
 
-
-
-//IMAGE UPLOAD
-const storage = multer.diskStorage({
-    destination:(req, file, cb) => {
-        cb(null, "images")},
-        filename:(req, file, cb) => {
-            cb(null, req.body.name)
-        }
-})
 
 //CREATE POST
-const upload = multer({storage:storage});
+
 
 router.post("/", async (req,res) => {
     console.log(req.body);

@@ -25,15 +25,15 @@ export default function TopBar() {
             </li>
 
             <li className="topListItem">
-            <Link className="link" to="/about">ABOUT</Link>
+            <Link className="link" to="/about"></Link>
             </li>
 
             <li className="topListItem">
-            <Link className="link" to="/contact">CONTACT</Link>
+            <Link className="link" to="/contact"></Link>
             </li>
 
             <li className="topListItem">
-            <Link className="link" to="/write">WRITE-POST</Link>
+            <Link className="link" to="/write">POST</Link>
             </li>
 
             <li className="topListItem" onClick={handleLogout}>
