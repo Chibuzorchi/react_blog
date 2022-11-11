@@ -9,7 +9,7 @@ const categoryRoute = require("./routes/categories");
 const cors = require("cors")
 const multer = require("multer");
 const path = require("path");
-const port = 9800;
+const port = process.env.PORT || 9800;
 
 app.use(cors())
 app.use(express.json());
